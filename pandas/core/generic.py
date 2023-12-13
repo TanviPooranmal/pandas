@@ -10688,6 +10688,8 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
                 for _dt in cond.dtypes:
                     if not is_bool_dtype(_dt):
                         raise ValueError(msg.format(dtype=_dt))
+                    if not isinstance(_dt, (np.number, np.bool_)):
+                        raise TypeError("Data types should be numeric or boolean")
                 if cond._mgr.any_extension_types:
                     # GH51574: avoid object ndarray conversion later on
                     cond = cond._constructor(
